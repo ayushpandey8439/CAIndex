@@ -1,0 +1,12 @@
+title = "CAIndex configuration"
+
+[library]
+name = "CAIndex"
+authors = ["Ayush Pandey"]
+
+[variables]
+treeDepth = 5
+maxVerticalSpread = 1
+maxVertexDegree = 2
+graphOutputPath = "../graphOut.gv"
+graphInputPath = "../data/50/rand0020.stg"
