@@ -7,12 +7,12 @@ using namespace std;
 toml::table config = toml::parse_file("config/config.toml");
 
 int main() {
-//
-//    int treeDepth = config["variables"]["treeDepth"].value_or(0);
-//    int maxDegree = config["variables"]["maxVertexDegree"].value_or(0);
-//    int verticalSpread = config["variables"]["maxVerticalSpread"].value_or(0);
-
-//    DRAG tree(maxDegree, treeDepth, verticalSpread);
-    DRAG tree;
-    tree.print();
+    try {
+        DRAG tree;
+        tree.print();
+    } catch (const invalid_argument& e) {
+        cout << e.what() << endl;
+    } catch (const runtime_error& e) {
+        cout << e.what() << endl;
+    }
 }

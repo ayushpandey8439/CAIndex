@@ -17,8 +17,6 @@ using namespace std;
 class DRAG {
 protected:
     Vertex* root;
-    int degree;
-    int depth;
     map<int, Vertex*> Vertices;
     void printTree(ofstream* graph, const string& prefix, Vertex* root);
 public:

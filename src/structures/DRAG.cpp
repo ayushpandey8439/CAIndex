@@ -5,8 +5,8 @@
 #include <fstream>
 #include <algorithm>
 #include "DRAG.h"
-
-
+#include "deque"
+#include "set"
 //DRAG::DRAG(int degree, int depth, int verticalSpread) {
 //    this->degree = degree;
 //    this->depth = depth;
@@ -16,14 +16,12 @@
 DRAG::DRAG() {
     string graphInputPath = config["variables"]["graphInputPath"].value_or("");
     if(graphInputPath.empty()) {
-        cout << "Graph path not found in config file" << endl;
-        return;
+        throw invalid_argument("Graph path not found in config file");
     }
     ifstream graph;
     graph.open(graphInputPath, ios::in);
     if (!graph.is_open()) {
-        cout << "Error opening file";
-        return;
+        throw runtime_error("Error opening graph source file");
     }
     string line;
     getline(graph, line);
@@ -53,6 +51,8 @@ DRAG::DRAG() {
             // Add vertex to the list of its predecessors
             auto predecessor = Vertices.find(stoi(p))->second;
             predecessor->children.push_back(v);
+            // Add predecessor to the list of its successors
+            v->parents.push_back(predecessor);
         }
     }
 
@@ -66,30 +66,44 @@ void DRAG::print(){
     {
         string graphPath = config["variables"]["graphOutputPath"].value_or("");
         if(graphPath.empty()) {
-            cout << "Graph path not found in config file" << endl;
-            return;
+            throw invalid_argument("Graph path not found in config file");
         }
         std::ofstream graph;
         graph.open(graphPath, ios::out);
         if (!graph.is_open()) {
-            cout << "Error opening file";
-            return;
+            throw runtime_error("Error opening graph output file");
         }
         graph << "digraph G {" << endl;
-        printTree(& graph, to_string(root->data), root);
+        // perform a breadth first traversal over the graph from the root and print the graph
+        // by onlu printing unique edges.
+        set<pair<int, int>> edges;
+        deque <Vertex*> q;
+        q.push_back(root);
+        while (!q.empty()) {
+            Vertex* v = q.front();
+            q.pop_front();
+            for (Vertex* child : v->children) {
+                if(edges.find(make_pair(v->data, child->data)) == edges.end()){
+                    graph << v->data << "->" << child->data << ";"<< endl;
+                    edges.insert(make_pair(v->data, child->data));
+                }
+                q.push_back(child);
+
+            }
+        }
         graph << "}" << endl;
         graph.close();
     }
 }
 
-void DRAG::printTree(ofstream * graph, const string& prefix, Vertex *node) {
-    if (node == nullptr)
-        return;
-
-    *graph << prefix << "->" << node->data << ";"<< endl;
-
-    for (Vertex* child : node->children) {
-        printTree(graph, to_string(node->data) , child);
-
-    }
-}
+//void DRAG::printTree(ofstream * graph, const string& prefix, Vertex *node) {
+//    if (node == nullptr)
+//        return;
+//
+//    *graph << prefix << "->" << node->data << ";"<< endl;
+//
+//    for (Vertex* child : node->children) {
+//        printTree(graph, to_string(node->data) , child);
+//
+//    }
+//}

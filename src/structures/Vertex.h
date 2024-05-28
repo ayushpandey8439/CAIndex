@@ -17,8 +17,11 @@ public:
 
     int data;
     vector <Vertex*> children;
+    vector <Vertex*> parents;
+    vector <int> label;
 
     static Vertex* createRandomDRAG(int degree, int depth, int verticalSpread);
+    void computeLabel();
 };
 
 
