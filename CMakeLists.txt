@@ -16,7 +16,7 @@ FetchContent_MakeAvailable(tomlplusplus)
 
 add_executable(CAIndex src/main.cpp
         src/structures/DRAG.cpp
-        src/structures/Vertex.cpp)
+)
 
 configure_file(src/config/config.toml ${CMAKE_CURRENT_BINARY_DIR}/config/config.toml COPYONLY)
 target_link_libraries(CAIndex PRIVATE tomlplusplus::tomlplusplus)

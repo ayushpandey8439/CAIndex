@@ -9,6 +9,7 @@ toml::table config = toml::parse_file("config/config.toml");
 int main() {
     try {
         DRAG tree;
+        tree.label();
         tree.print();
     } catch (const invalid_argument& e) {
         cout << e.what() << endl;

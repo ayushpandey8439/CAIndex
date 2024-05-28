@@ -16,7 +16,6 @@ extern toml::table config;
 using namespace std;
 class DRAG {
 protected:
-    Vertex* root;
     map<int, Vertex*> Vertices;
     void printTree(ofstream* graph, const string& prefix, Vertex* root);
 public:
@@ -24,6 +23,9 @@ public:
     DRAG();
 
     void print();
+    void label();
+
+    Vertex* root;
 };
 
 

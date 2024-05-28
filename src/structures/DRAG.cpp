@@ -55,12 +55,22 @@ DRAG::DRAG() {
             v->parents.push_back(predecessor);
         }
     }
-
-
-//    while (getline(graph, line)) {
-//       cout << line << endl;
-//    }
 }
+
+void DRAG::label(){
+    deque <Vertex*> q;
+    q.push_back(root);
+    while (!q.empty()) {
+        Vertex* v = q.front();
+        q.pop_front();
+        v->computeLabel();
+        for (Vertex* child : v->children) {
+            q.push_back(child);
+        }
+    }
+
+}
+
 
 void DRAG::print(){
     {
@@ -74,11 +84,18 @@ void DRAG::print(){
             throw runtime_error("Error opening graph output file");
         }
         graph << "digraph G {" << endl;
+        // Print the set of vertices and set their labels
+        for (auto const& [key, vertex] : Vertices) {
+            graph << vertex->data << " [label=\"" << vertex->data<< "(" << vertex->labelString() << ")\"];" << endl;
+        }
+
         // perform a breadth first traversal over the graph from the root and print the graph
-        // by onlu printing unique edges.
+        // by only printing unique edges.
+
         set<pair<int, int>> edges;
         deque <Vertex*> q;
         q.push_back(root);
+
         while (!q.empty()) {
             Vertex* v = q.front();
             q.pop_front();
