@@ -17,14 +17,9 @@ using namespace std;
 class DRAG {
 protected:
     map<int, Vertex*> Vertices;
-    void printTree(ofstream* graph, const string& prefix, Vertex* root);
 public:
-//    DRAG(int degree, int depth, int verticalSpread);
     DRAG();
-
     void print();
-    void label();
-
     Vertex* root;
 };
 

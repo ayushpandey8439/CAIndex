@@ -16,6 +16,10 @@ FetchContent_MakeAvailable(tomlplusplus)
 
 add_executable(CAIndex src/main.cpp
         src/structures/DRAG.cpp
+        src/indices/CAIndex/CAIndex.cpp
+        src/indices/CAIndex/CAIndex.h
+        src/indices/AOIndex/AOIndex.cpp
+        src/indices/AOIndex/AOIndex.h
 )
 
 configure_file(src/config/config.toml ${CMAKE_CURRENT_BINARY_DIR}/config/config.toml COPYONLY)

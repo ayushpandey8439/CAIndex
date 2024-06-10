@@ -7,46 +7,32 @@
 
 #include <vector>
 #include "algorithm"
+#include "iostream"
+
 
 using namespace std;
 
 class Vertex {
 public:
-    Vertex(int data){
+    Vertex(string data){
         this->data = data;
     }
 
-    int data;
+    string data;
     vector <Vertex*> children;
     vector <Vertex*> parents;
-    vector <int> label;
+    vector <string> label;
 
-    static Vertex* createRandomDRAG(int degree, int depth, int verticalSpread);
 
     string labelString(){
         string labelString = "";
         for(auto i: label){
-            labelString += to_string(i) + " ";
+            labelString += i + ", ";
         }
         return labelString;
     }
 
-    void computeLabel(){
-        vector<int> tempLabel;
-        for(auto parent: parents){
-            if(tempLabel.empty()){
-                tempLabel.insert(tempLabel.begin(), parent->label.begin(), parent->label.end());
-            }
-            else {
-                // remove all elements from tempLabel that are not in parent->label
-                tempLabel.erase(remove_if(tempLabel.begin(), tempLabel.end(), [parent](int i){
-                    return find(parent->label.begin(), parent->label.end(), i) == parent->label.end();
-                }), tempLabel.end());
-            }
-        }
-        tempLabel.push_back(data);
-        label = tempLabel;
-    }
+
 };
 
 
