@@ -10,8 +10,8 @@ AOIndex::AOIndex(Vertex *root) {
 }
 
 void AOIndex::computeLabel(Vertex *v) {
-    v->label.push_back("["+v->data);
-    v->label.push_back("]"+v->data);
+    v->label.push_back("l"+v->data);
+    v->label.push_back("h"+v->data);
     for (Vertex *child: v->children) {
         computeLabel(child);
     }

@@ -6,5 +6,5 @@ authors = ["Ayush Pandey"]
 
 [variables]
 graphOutputPath = "../graphOut.gv"
-graphInputPath = "../data/tree.stg"
-index = "AOIndex"
+graphInputPath = "../data/100/rand0050.stg"
+index = "CAIndex"
